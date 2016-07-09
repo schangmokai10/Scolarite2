@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <h:body>
+        <div id="menu">
+            <ui:include src="menu.xhtml"/>
+        </div>
+        <f:view>
+           <p:dialog widgetVar="dlg" header=" Enregistrer une filiere" hideEffect="explode" showEffect="explode" modal="true">
+            <h:form>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Departement:" for="departement" />
+                    <p:selectOneMenu id="departement" value="#{filiereBeans.filiere.departement}" >
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </p:selectOneMenu>
+                   
+                    <p:outputLabel value="Code:" for="code" />
+                    <p:inputText id="code" value="#{filiereBeans.filiere.code}" title="Code" />
+                    <p:outputLabel value="Intitule:" for="intitule" />
+                    <p:inputText id="intitule" value="#{filiereBeans.filiere.intitule}" title="Intitule" />
+                </p:panelGrid>
+                <p:commandButton value="Enregistrer" action="#{filiereBeans.createFiliere()}"  oncomplete="PF('dlg').hide()" update=":tableForm:table"/>
+            </h:form>
+          </p:dialog>
+
+
+          <p:dialog widgetVar="dl" header=" Modifier une filiere" hideEffect="fold" showEffect="explode" resizable="true">
+            <h:form id="formModifier">                
+                <p:panelGrid columns="2" id="panelGModifier">
+                    <p:outputLabel value="Departement:" for="departement" />
+                    <p:selectOneMenu id="departement" value="#{filiereBeans.filiere.departement}" >
+                        <!-- TODO: update below reference to list of available items-->
+                        <f:selectItems value="#{fixme}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:outputLabel value="Code:" for="code" />
+                    <p:inputText id="code" value="#{filiereBeans.filiere.code}" title="Code" />
+                    <p:outputLabel value="Intitule:" for="intitule" />
+                    <p:inputText id="intitule" value="#{filiereBeans.filiere.intitule}" title="Intitule" />
+                    <h:inputHidden id="number" value="#{filiereBeans.filiere.id}" />
+                </p:panelGrid>
+                <p:commandButton value="Modifier" action="#{filiereBeans.updateFiliere()}"  oncomplete="PF('dl').hide()" update=":tableForm:table" />
+            </h:form>
+           </p:dialog> 
+        </f:view>
+
+        
+        <f:view>
+            <h:form id='tableForm'>
+                <p:dataTable value="#{filiereBeans.findAllFiliere()}" var="item" paginator="true" rows="5" paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} " id="table" selectionMode="single" rowsPerPageTemplate="5,10,15" selection="#{filiereBeans.filiere}" rowKey="#{item.id}">
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Departement"/>
+                        </f:facet>
+                        <h:outputText value="#{item.departement}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code"/>
+                        </f:facet>
+                        <h:outputText value="#{item.code}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Intitule"/>
+                        </f:facet>
+                        <h:outputText value="#{item.intitule}"/>
+                    </p:column>
+                 </p:dataTable>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton type="push" onclick="PF('dlg').show()" value="Nouvelle Filiere" icon="ui-icon-disk"/>
+                        <p:commandButton  onclick="PF('dl').show()" value="Modifier Filiere" update=":formModifier:panelGModifier" icon="ui-icon-arrowrefresh-1-w"/>
+                       
+                    </f:facet>
+                </p:toolbar>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>

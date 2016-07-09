@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <h:body>
+        <div id="menu">
+            <ui:include src="menu.xhtml"/>
+        </div>
+        <f:view>
+           <p:dialog widgetVar="dlg" header=" Enregistrer un etudiant" hideEffect="explode" showEffect="explode" modal="true">
+            <h:form>
+                <p:panelGrid columns="2">
+                    
+                    <p:outputLabel value="Code:" for="code" />
+                    <p:inputText id="code" value="#{departementBeans.departement.code}" title="Code" />
+                    <p:outputLabel value="Intitule:" for="intitule" />
+                    <p:inputText id="intitule" value="#{departementBeans.departement.intitule}" title="Intitule" />
+                </p:panelGrid>
+                <p:commandButton value="Enregistrer" action="#{departementBeans.createDepartement()}"  oncomplete="PF('dlg').hide()" update=":tableForm:table"/>
+            </h:form>
+          </p:dialog>
+
+
+          <p:dialog widgetVar="dl" header=" Modifier un departement" hideEffect="fold" showEffect="explode" resizable="true">
+            <h:form id="formModifier">                
+                <p:panelGrid columns="2" id="panelGModifier">
+                   
+                    <p:outputLabel value="Code:" for="code" />
+                    <p:inputText id="code" value="#{departementBeans.departement.code}" title="Code" />
+                    <p:outputLabel value="Intitule:" for="intitule" />
+                    <p:inputText id="intitule" value="#{departementBeans.departement.intitule}" title="Intitule" />
+                    <h:inputHidden id="number" value="#{departementBeans.departement.id}" />
+                </p:panelGrid>
+                <p:commandButton value="Modifier" action="#{departementBeans.updateDepartement()}"  oncomplete="PF('dl').hide()" update=":tableForm:table" />
+            </h:form>
+           </p:dialog> 
+        </f:view>
+
+        
+        <f:view>
+            <h:form id='tableForm'>
+                <p:dataTable value="#{departementBeans.findAllDepartement()}" var="item" paginator="true" rows="5" paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} " id="table" selectionMode="single" rowsPerPageTemplate="5,10,15" selection="#{departementBeans.departement}" rowKey="#{item.id}">
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code"/>
+                        </f:facet>
+                        <h:outputText value="#{item.code}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Intitule"/>
+                        </f:facet>
+                        <h:outputText value="#{item.intitule}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton type="push" onclick="PF('dlg').show()" value="Nouveau Departement" icon="ui-icon-disk"/>
+                        <p:commandButton  onclick="PF('dl').show()" value="Modifier Departement" update=":formModifier:panelGModifier" icon="ui-icon-arrowrefresh-1-w"/>
+                       
+                    </f:facet>
+                </p:toolbar>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>

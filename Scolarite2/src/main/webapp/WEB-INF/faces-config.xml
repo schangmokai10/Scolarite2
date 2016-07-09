@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <application>
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+    </application>
+     <navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>etudiant</from-outcome>
+            <to-view-id>/Etudiant.xhtml</to-view-id>
+            <redirect>/templatetudiant.xhtml</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>departement</from-outcome>
+            <to-view-id>/Departement.xhtml</to-view-id>
+            <redirect>/templatedepartement.xhtml</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>filiere</from-outcome>
+            <to-view-id>/Filiere.xhtml</to-view-id>
+            <redirect>/templatefiliere.xhtml</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inscription</from-outcome>
+            <to-view-id>/Inscription.xhtml</to-view-id>
+            <redirect>/templateinscription.xhtml</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>preinscription</from-outcome>
+            <to-view-id>/Prinscription.xhtml</to-view-id>
+            <redirect>/templateprinscription.xhtml</redirect>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
